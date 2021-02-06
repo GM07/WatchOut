@@ -2,6 +2,7 @@
 import 'package:WatchOut/widgets/IngredientHistoryHandler.dart';
 import 'dart:io';
 import 'package:WatchOut/widgets/ingredient_list.dart';
+import 'package:WatchOut/widgets/ingredient_tile.dart';
 import 'package:flutter/material.dart';
 import '../widgets/waste_saved.dart';
 import '../widgets/watch_out.dart';
@@ -29,9 +30,7 @@ class _HomeState extends State<Home> {
 
   Widget _getCurrentWidget() {
     if (_currentIndex == 0) {
-      return Container(
-        color: Colors.green,
-      );
+      return IngredientTile();
     } else if (_currentIndex == 1) {
       return MainPage();
     } else {

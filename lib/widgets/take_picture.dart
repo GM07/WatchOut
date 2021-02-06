@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:WatchOut/classes/ingredient.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:string_similarity/string_similarity.dart';
 import 'package:flutter/material.dart';
@@ -69,27 +70,52 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
       Navigator.pop(context, filePath);
 
-      await _recognizeText(File(filePath));
+      List<Ingredient> ingredients = await _recognizeText(File(filePath));
     } catch (e) {
       // If an error occurs, log the error to the console.
       print('CAMERA : ' + Camera.mainCamera.toString());
     }
   }
 
-  static _recognizeText(File image) async {
+  static Future<List<Ingredient>> _recognizeText(File image) async {
     final FirebaseVisionImage visionImage = FirebaseVisionImage.fromFile(image);
     final TextRecognizer cloudTextRecognizer =
         FirebaseVision.instance.cloudTextRecognizer();
     final VisionText visionText =
         await cloudTextRecognizer.processImage(visionImage);
+    List<Ingredient> ingredientList = [];
+    String item;
+    int quantite = 0;
     for (TextBlock block in visionText.blocks) {
       for (TextLine line in block.lines) {
         for (TextElement element in line.elements) {
-          print(element.text);
+          if (isNumeric(element.text)) {
+            quantite = int.parse(element.text);
+            ingredientList.add(Ingredient(
+                date: DateTime.now(), quantity: quantite, title: item));
+            item = null;
+          } else {
+            if (item != null) {
+              ingredientList.add(Ingredient(
+                  date: DateTime.now(), quantity: 1, title: element.text));
+            } else
+              item = element.text;
+          }
         }
       }
     }
     cloudTextRecognizer.close();
+    for (Ingredient ingredient in ingredientList) {
+      print(ingredient.title + " " + ingredient.quantity.toString());
+    }
+    return ingredientList;
+  }
+
+  static bool isNumeric(String s) {
+    if (s == null) {
+      return false;
+    }
+    return double.parse(s, (e) => null) != null;
   }
 
   @override

@@ -12,8 +12,6 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int _currentIndex = 1;
 
-  _openCamera() async {}
-
   @override
   void initState() {
     super.initState();

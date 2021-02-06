@@ -59,58 +59,15 @@ class _IngredientListState extends State<IngredientList> {
         gridDelegate:
             SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
         itemBuilder: (BuildContext context, int index) {
-          return Card(
-            child: GridTile(
-              child: Center(child: Text(items[index].title)),
-              footer: Padding(
-                padding: const EdgeInsets.all(8.0),
+          return Container(
+              margin: EdgeInsets.all(4.0),
+              decoration: BoxDecoration(color: Colors.red.withAlpha(100)),
+              child: Center(
                 child: Text(
-                  items[index].quantity.toString(),
-                  textAlign: TextAlign.end,
+                  items[index].title,
+                  style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-              ),
-            ),
-          );
+              ));
         });
-
-    // return ReorderableListView(
-    //   children: items
-    //       .map((item) => Padding(
-    //             key: Key("${item.title}${item.date.millisecondsSinceEpoch}"),
-    //             padding: const EdgeInsets.all(4.0),
-    //             child: Container(
-    //               child: ListTile(
-    //                 onTap: () => _showInfo(item),
-    //                 title: Text("${item.title}"),
-    //                 subtitle: Text("${item.date.toUtc()}"),
-    //                 trailing: Icon(Icons.menu),
-    //               ),
-    //             ),
-    //           ))
-    //       .toList(),
-    //   onReorder: (int start, int current) {
-    //     // dragging from top to bottom
-    //     if (start < current) {
-    //       int end = current - 1;
-    //       Test startItem = items[start];
-    //       int i = 0;
-    //       int local = start;
-    //       do {
-    //         items[local] = items[++local];
-    //         i++;
-    //       } while (i < end - start);
-    //       items[end] = startItem;
-    //     }
-    //     // dragging from bottom to top
-    //     else if (start > current) {
-    //       Test startItem = items[start];
-    //       for (int i = start; i > current; i--) {
-    //         items[i] = items[i - 1];
-    //       }
-    //       items[current] = startItem;
-    //     }
-    //     setState(() {});
-    //   },
-    // );
   }
 }

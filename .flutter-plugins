@@ -1,6 +1,6 @@
 # This is a generated file; do not edit or check into version control.
-firebase_core=/home/felix/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core-0.5.3/
-firebase_core_web=/home/felix/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core_web-0.2.1+1/
-firebase_ml_vision=/home/felix/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_ml_vision-0.10.0/
-flutter_plugin_android_lifecycle=/home/felix/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_plugin_android_lifecycle-1.0.11/
-image_picker=/home/felix/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/image_picker-0.6.7+22/
+camera=C:\\Users\\mehga\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dartlang.org\\camera-0.5.8+17\\
+path_provider=C:\\Users\\mehga\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dartlang.org\\path_provider-1.6.27\\
+path_provider_linux=C:\\Users\\mehga\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dartlang.org\\path_provider_linux-0.0.1+2\\
+path_provider_macos=C:\\Users\\mehga\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dartlang.org\\path_provider_macos-0.0.4+8\\
+path_provider_windows=C:\\Users\\mehga\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dartlang.org\\path_provider_windows-0.0.4+3\\

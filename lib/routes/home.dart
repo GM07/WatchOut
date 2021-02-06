@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import 'dart:io';
 
 import 'package:WatchOut/widgets/ingredient_list.dart';
@@ -7,6 +8,12 @@ import '../widgets/watch_out.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:string_similarity/string_similarity.dart';
+=======
+import 'package:flutter/material.dart';
+import '../widgets/main_page.dart';
+import 'package:bottom_bars/bottom_bars.dart';
+import 'new_list.dart';
+>>>>>>> 3be08bfe468d01b5b1987e5c96328ec6f0dce6d1
 
 class Home extends StatefulWidget {
   const Home({Key key}) : super(key: key);
@@ -16,10 +23,9 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  int _currentIndex = 1;
+
   _openCamera() async {
-    File awaitImage =
-        File((await ImagePicker().getImage(source: ImageSource.gallery)).path);
-    _recognizeText(awaitImage);
   }
 
   _recognizeText(File image) async {
@@ -39,14 +45,28 @@ class _HomeState extends State<Home> {
     textRecognizer.close();
   }
 
+
   @override
   void initState() {
     super.initState();
   }
 
+  Widget _getCurrentWidget() {
+    if (_currentIndex == 0) {
+      return Container(
+        color: Colors.green,
+      );
+    } else if (_currentIndex == 1) {
+      return MainPage();
+    } else {
+      return NewList();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+<<<<<<< HEAD
       floatingActionButton: FloatingActionButton(
         backgroundColor: Theme.of(context).primaryColor,
         onPressed: () => _openCamera(),
@@ -122,9 +142,25 @@ class _HomeState extends State<Home> {
                 ),
               ),
             ),
+=======
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _currentIndex,
+          fixedColor: Colors.red,
+          onTap: (value) {
+            setState(() {
+              _currentIndex = value;
+            });
+          },
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+          items: [
+            BottomNavigationBarItem(
+                icon: Icon(Icons.shopping_cart), title: Text('')),
+            BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('')),
+            BottomNavigationBarItem(icon: Icon(Icons.add), title: Text('')),
+>>>>>>> 3be08bfe468d01b5b1987e5c96328ec6f0dce6d1
           ],
         ),
-      ),
-    );
+        body: _getCurrentWidget());
   }
 }

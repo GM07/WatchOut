@@ -8,11 +8,31 @@ import 'package:camera/camera.dart';
 import 'package:WatchOut/classes/camera.dart';
 import 'package:path/path.dart' show join;
 import 'package:path_provider/path_provider.dart';
+import 'package:firebase_ml_vision/firebase_ml_vision.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:string_similarity/string_similarity.dart';
 
 class TakePictureScreen extends StatefulWidget {
   const TakePictureScreen({
     Key key,
   }) : super(key: key);
+
+  static recognizeText(File image) async {
+    final FirebaseVisionImage visionImage = FirebaseVisionImage.fromFile(image);
+    final TextRecognizer cloudTextRecognizer =
+        FirebaseVision.instance.cloudTextRecognizer();
+    final VisionText visionText =
+        await cloudTextRecognizer.processImage(visionImage);
+    for (TextBlock block in visionText.blocks) {
+      for (TextLine line in block.lines) {
+        for (TextElement element in line.elements) {
+          print(element.text);
+          // .bestMatch(['tomato', 'pizza', 'ananas', 'linguine']));
+        }
+      }
+    }
+    cloudTextRecognizer.close();
+  }
 
   @override
   TakePictureScreenState createState() => TakePictureScreenState();
@@ -51,7 +71,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
       await _initializeControllerFuture;
 
       final Directory extDir = await getApplicationDocumentsDirectory();
-      final String dirPath = '${extDir.path}/Pictures/tacker';
+      final String dirPath = '${extDir.path}/Pictures/list';
       await Directory(dirPath).create(recursive: true);
       final String filePath =
           '$dirPath/${DateTime.now().millisecondsSinceEpoch}.jpg';
@@ -70,7 +90,11 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
       Navigator.pop(context, filePath);
 
+<<<<<<< HEAD
       List<Ingredient> ingredients = await _recognizeText(File(filePath));
+=======
+      await TakePictureScreen.recognizeText(File(filePath));
+>>>>>>> 99f20bbc08b54e5acd26d40d58e4ec86360fe29b
     } catch (e) {
       // If an error occurs, log the error to the console.
       print('CAMERA : ' + Camera.mainCamera.toString());

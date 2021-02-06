@@ -1,5 +1,5 @@
 # Scanner liste epicerie
-- Input : Photo ecrite -> YOLO Google
+- Input : Photo ecrite -> VisionAI Google
 - Output : Liste ingredients (instances)
 - Modifier liste epicerie si mauvaise reconnaissance ou si on a pas achete l'item
 

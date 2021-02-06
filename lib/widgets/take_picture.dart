@@ -90,11 +90,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
       Navigator.pop(context, filePath);
 
-<<<<<<< HEAD
       List<Ingredient> ingredients = await _recognizeText(File(filePath));
-=======
-      await TakePictureScreen.recognizeText(File(filePath));
->>>>>>> 99f20bbc08b54e5acd26d40d58e4ec86360fe29b
     } catch (e) {
       // If an error occurs, log the error to the console.
       print('CAMERA : ' + Camera.mainCamera.toString());

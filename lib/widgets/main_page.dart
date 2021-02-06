@@ -2,6 +2,7 @@ import 'package:WatchOut/widgets/ingredient_list.dart';
 import 'package:flutter/material.dart';
 import '../widgets/waste_saved.dart';
 import '../widgets/watch_out.dart';
+import '../classes/ingredient.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -9,6 +10,25 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  List<Widget> currentItems() {
+    List<Ingredient> subList = List();
+    if (testList.length > 5) {
+      subList = testList.getRange(0, 5).toList();
+    } else {
+      subList = testList;
+    }
+
+    return subList.map((Ingredient e) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: ListTile(
+          title: Text('Ingredient : ' + e.title),
+          subtitle: Text('Quantite : ' + e.quantity.toString()),
+        ),
+      );
+    }).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -49,7 +69,8 @@ class _MainPageState extends State<MainPage> {
               ),
             ),
           ),
-          Container(height: 300, child: IngredientList()),
+          ...currentItems(),
+          // Container(height: 300, child: IngredientList()),
           Padding(
             padding: EdgeInsets.all(16.0),
             child: RaisedButton(
@@ -70,8 +91,8 @@ class _MainPageState extends State<MainPage> {
           Container(
             margin: EdgeInsets.symmetric(horizontal: 4.0),
             padding: EdgeInsets.all(8.0),
-            decoration: new BoxDecoration(
-                borderRadius: new BorderRadius.all(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(
               const Radius.circular(10.0),
             )),
             child: Padding(

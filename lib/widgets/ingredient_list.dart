@@ -42,8 +42,7 @@ class _IngredientListState extends State<IngredientList> {
         itemBuilder: (BuildContext context, int index) {
           return Container(
               margin: EdgeInsets.all(4.0),
-              decoration:
-                  BoxDecoration(color: Colors.redAccent[100].withAlpha(100)),
+              decoration: BoxDecoration(color: Colors.red.withAlpha(100)),
               child: Center(
                 child: Text(
                   items[index].title,

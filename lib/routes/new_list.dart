@@ -1,4 +1,6 @@
+import 'package:WatchOut/classes/ingredient.dart';
 import 'package:flutter/material.dart';
+import '../widgets/custom_button.dart';
 
 class NewList extends StatefulWidget {
   @override
@@ -6,19 +8,39 @@ class NewList extends StatefulWidget {
 }
 
 class _NewListState extends State<NewList> {
+  List<Widget> currentItems() {
+    return testList.map((Ingredient e) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: ListTile(
+          title: Text('Ingredient : ' + e.title),
+          subtitle: Text('Quantite : ' + e.quantity.toString()),
+        ),
+      );
+    }).toList();
+  }
+
+  _openCamera() {
+    print('Camera open');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          automaticallyImplyLeading: true,
-          title: Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Text('Ingredients'),
-          ),
-        ),
         body: Container(
-          color: Colors.blue,
-        ));
+      child: ListView(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(16.0).add(EdgeInsets.only(top: 8.0)),
+            child: Center(
+                child: CustomButton(
+              onPressed: _openCamera,
+              title: "Scan my list",
+            )),
+          ),
+          ...currentItems()
+        ],
+      ),
+    ));
   }
 }

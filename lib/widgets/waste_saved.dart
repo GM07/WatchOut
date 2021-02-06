@@ -29,15 +29,10 @@ class _WasteSavedState extends State<WasteSaved> {
             child: Text(
               'You\'ve saved ${waste_saved} aliments !'.toUpperCase(),
               style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  shadows: <Shadow>[
-                    Shadow(
-                        blurRadius: 2,
-                        offset: Offset(-1, 0),
-                        color: Colors.black)
-                  ]),
+                color: Colors.black,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
               softWrap: true,
               textAlign: TextAlign.center,
             ),

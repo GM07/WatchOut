@@ -9,7 +9,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:string_similarity/string_similarity.dart';
 import 'package:flutter/material.dart';
 import '../widgets/main_page.dart';
-import 'package:bottom_bars/bottom_bars.dart';
 import 'new_list.dart';
 
 class Home extends StatefulWidget {

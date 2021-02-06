@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:WatchOut/classes/ingredient.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:string_similarity/string_similarity.dart';
@@ -11,6 +10,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:string_similarity/string_similarity.dart';
+import 'package:WatchOut/classes/file_handler.dart';
 
 class TakePictureScreen extends StatefulWidget {
   const TakePictureScreen({

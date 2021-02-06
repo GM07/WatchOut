@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'classes/client.dart';
+import 'classes/file_handler.dart';
 import 'routes/home.dart';
 import 'theme.dart';
 import 'routes/new_list.dart';
@@ -11,6 +13,10 @@ void main() async {
   final cameras = await availableCameras();
 
   Camera.mainCamera = cameras.first;
+
+  Client.items = (await loadJsonIngredients('assets/ingredients.json'));
+
+  print(Client.items);
 
   runApp(MyApp());
 }

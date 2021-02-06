@@ -10,6 +10,8 @@ class Client {
 
   static Map<Ingredient, int> scores = Map();
 
+  static List<String> items;
+
   static loadListsFromBackup() async {}
 
   // Adds current ingredient list to backup

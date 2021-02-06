@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'ingredient_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:WatchOut/classes/ingredient.dart';
 
 class IngredientHistory extends StatefulWidget {
   @override

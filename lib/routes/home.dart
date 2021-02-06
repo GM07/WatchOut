@@ -1,3 +1,4 @@
+import 'package:WatchOut/widgets/IngredientHistoryHandler.dart';
 import 'package:WatchOut/widgets/ingredient_list.dart';
 import 'package:flutter/material.dart';
 import '../widgets/waste_saved.dart';
@@ -65,6 +66,7 @@ class _HomeState extends State<Home> {
               ),
             ),
             Container(height: 300, child: IngredientList()),
+            Container(height: 300, child: IngredientHistory()),
             Padding(
               padding: EdgeInsets.all(16.0),
               child: RaisedButton(

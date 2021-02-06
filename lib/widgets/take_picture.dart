@@ -5,11 +5,31 @@ import 'package:camera/camera.dart';
 import 'package:WatchOut/classes/camera.dart';
 import 'package:path/path.dart' show join;
 import 'package:path_provider/path_provider.dart';
+import 'package:firebase_ml_vision/firebase_ml_vision.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:string_similarity/string_similarity.dart';
 
 class TakePictureScreen extends StatefulWidget {
   const TakePictureScreen({
     Key key,
   }) : super(key: key);
+
+  static recognizeText(File image) async {
+    final FirebaseVisionImage visionImage = FirebaseVisionImage.fromFile(image);
+    final TextRecognizer textRecognizer =
+        FirebaseVision.instance.textRecognizer();
+    final VisionText visionText =
+        await textRecognizer.processImage(visionImage);
+    for (TextBlock block in visionText.blocks) {
+      for (TextLine line in block.lines) {
+        for (TextElement element in line.elements) {
+          print(element.text);
+          // .bestMatch(['tomato', 'pizza', 'ananas', 'linguine']));
+        }
+      }
+    }
+    textRecognizer.close();
+  }
 
   @override
   TakePictureScreenState createState() => TakePictureScreenState();
@@ -48,7 +68,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
       await _initializeControllerFuture;
 
       final Directory extDir = await getApplicationDocumentsDirectory();
-      final String dirPath = '${extDir.path}/Pictures/tacker';
+      final String dirPath = '${extDir.path}/Pictures/list';
       await Directory(dirPath).create(recursive: true);
       final String filePath =
           '$dirPath/${DateTime.now().millisecondsSinceEpoch}.jpg';
@@ -66,6 +86,8 @@ class TakePictureScreenState extends State<TakePictureScreen> {
       await _controller.dispose();
 
       Navigator.pop(context, filePath);
+      print(' PICTURE TAKEN, SENDING IT TO AI : ' + filePath);
+      await TakePictureScreen.recognizeText(File(filePath));
     } catch (e) {
       // If an error occurs, log the error to the console.
       print('CAMERA : ' + Camera.mainCamera.toString());

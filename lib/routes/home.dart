@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:WatchOut/widgets/ingredient_list.dart';
 import 'package:flutter/material.dart';
 import '../widgets/waste_saved.dart';
 import '../widgets/watch_out.dart';
+import 'package:firebase_ml_vision/firebase_ml_vision.dart';
+import 'dart:developer';
 
 class Home extends StatefulWidget {
   const Home({Key key}) : super(key: key);
@@ -11,7 +15,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  _openCamera() {}
+  _openCamera() async {}
 
   @override
   void initState() {

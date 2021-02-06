@@ -18,10 +18,10 @@ class TakePictureScreen extends StatefulWidget {
 
   static recognizeText(File image) async {
     final FirebaseVisionImage visionImage = FirebaseVisionImage.fromFile(image);
-    final TextRecognizer textRecognizer =
-        FirebaseVision.instance.textRecognizer();
+    final TextRecognizer cloudTextRecognizer =
+        FirebaseVision.instance.cloudTextRecognizer();
     final VisionText visionText =
-        await textRecognizer.processImage(visionImage);
+        await cloudTextRecognizer.processImage(visionImage);
     for (TextBlock block in visionText.blocks) {
       for (TextLine line in block.lines) {
         for (TextElement element in line.elements) {
@@ -30,7 +30,7 @@ class TakePictureScreen extends StatefulWidget {
         }
       }
     }
-    textRecognizer.close();
+    cloudTextRecognizer.close();
   }
 
   @override

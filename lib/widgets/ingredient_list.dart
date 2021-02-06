@@ -1,30 +1,5 @@
-
 import 'package:flutter/material.dart';
-
-class Ingredient {
-  Ingredient({this.title, this.date, this.quantity});
-  String title;
-  DateTime date;
-  int quantity;
-
-  Map<String, dynamic> toJson() {
-    return {
-      date.toString(): {
-        'date': date.toString(),
-        'title': title,
-        'quantity': quantity
-      }
-    };
-  }
-
-  Ingredient.fromJson(Map json){
-    this.date = DateTime.parse(json['date']);
-    this.title = json['title'];
-    this.quantity = json['quantity'];
-  }
-
-}
-
+import 'package:WatchOut/classes/ingredient.dart';
 
 class IngredientList extends StatefulWidget {
   IngredientList({Key key}) : super(key: key);

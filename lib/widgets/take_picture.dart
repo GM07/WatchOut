@@ -1,6 +1,7 @@
 import 'dart:io';
-
+import 'package:WatchOut/classes/client.dart';
 import 'package:WatchOut/classes/ingredient.dart';
+import 'package:WatchOut/theme.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:string_similarity/string_similarity.dart';
 import 'package:flutter/material.dart';
@@ -11,28 +12,12 @@ import 'package:path_provider/path_provider.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:string_similarity/string_similarity.dart';
+import 'package:WatchOut/classes/file_handler.dart';
 
 class TakePictureScreen extends StatefulWidget {
   const TakePictureScreen({
     Key key,
   }) : super(key: key);
-
-  static recognizeText(File image) async {
-    final FirebaseVisionImage visionImage = FirebaseVisionImage.fromFile(image);
-    final TextRecognizer cloudTextRecognizer =
-        FirebaseVision.instance.cloudTextRecognizer();
-    final VisionText visionText =
-        await cloudTextRecognizer.processImage(visionImage);
-    for (TextBlock block in visionText.blocks) {
-      for (TextLine line in block.lines) {
-        for (TextElement element in line.elements) {
-          print(element.text);
-          // .bestMatch(['tomato', 'pizza', 'ananas', 'linguine']));
-        }
-      }
-    }
-    cloudTextRecognizer.close();
-  }
 
   @override
   TakePictureScreenState createState() => TakePictureScreenState();
@@ -109,6 +94,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
     for (TextBlock block in visionText.blocks) {
       for (TextLine line in block.lines) {
         for (TextElement element in line.elements) {
+          print(Client.items.elementAt(0));
           if (isNumeric(element.text)) {
             quantite = int.parse(element.text);
             ingredientList.add(Ingredient(
@@ -116,13 +102,19 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             item = null;
           } else {
             if (item != null) {
-              ingredientList.add(Ingredient(
-                  date: DateTime.now(), quantity: 1, title: element.text));
-            } else
-              item = element.text;
+              ingredientList.add(
+                  Ingredient(date: DateTime.now(), quantity: 1, title: item));
+            }
+
+            item = element.text.bestMatch(Client.items).toString();
+            print(item);
           }
         }
       }
+    }
+    if (item != null) {
+      ingredientList
+          .add(Ingredient(date: DateTime.now(), quantity: 1, title: item));
     }
     cloudTextRecognizer.close();
     for (Ingredient ingredient in ingredientList) {

@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:firebase_ml_vision/firebase_ml_vision.dart';
+import 'package:string_similarity/string_similarity.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:WatchOut/classes/camera.dart';
@@ -66,10 +68,28 @@ class TakePictureScreenState extends State<TakePictureScreen> {
       await _controller.dispose();
 
       Navigator.pop(context, filePath);
+
+      await _recognizeText(File(filePath));
     } catch (e) {
       // If an error occurs, log the error to the console.
       print('CAMERA : ' + Camera.mainCamera.toString());
     }
+  }
+
+  static _recognizeText(File image) async {
+    final FirebaseVisionImage visionImage = FirebaseVisionImage.fromFile(image);
+    final TextRecognizer cloudTextRecognizer =
+        FirebaseVision.instance.cloudTextRecognizer();
+    final VisionText visionText =
+        await cloudTextRecognizer.processImage(visionImage);
+    for (TextBlock block in visionText.blocks) {
+      for (TextLine line in block.lines) {
+        for (TextElement element in line.elements) {
+          print(element.text);
+        }
+      }
+    }
+    cloudTextRecognizer.close();
   }
 
   @override

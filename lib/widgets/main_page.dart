@@ -1,8 +1,7 @@
-import 'package:WatchOut/widgets/ingredient_list.dart';
+import 'package:WatchOut/classes/ingredient.dart';
 import 'package:flutter/material.dart';
 import '../widgets/waste_saved.dart';
 import '../widgets/watch_out.dart';
-import '../classes/ingredient.dart';
 
 class MainPage extends StatefulWidget {
   @override

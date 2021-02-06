@@ -1,9 +1,6 @@
-<<<<<<< HEAD
-import 'package:WatchOut/widgets/IngredientHistoryHandler.dart';
-=======
-import 'dart:io';
 
->>>>>>> e9d45b43c0451e9e8c538d4a6222a5f33f1b099f
+import 'package:WatchOut/widgets/IngredientHistoryHandler.dart';
+import 'dart:io';
 import 'package:WatchOut/widgets/ingredient_list.dart';
 import 'package:flutter/material.dart';
 import '../widgets/waste_saved.dart';

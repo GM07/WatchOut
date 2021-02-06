@@ -29,6 +29,10 @@ dependencies:
   firebase_ml_vision: ^0.10.0
   firebase_core: ^0.5.3
   bottom_bars: ^1.0.1
+  image_picker: ^0.6.7+22
+  string_similarity: ^1.1.0
+
+
 
 
   # The following adds the Cupertino Icons font to your application.

@@ -2,3 +2,5 @@
 firebase_core=/home/felix/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core-0.5.3/
 firebase_core_web=/home/felix/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core_web-0.2.1+1/
 firebase_ml_vision=/home/felix/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_ml_vision-0.10.0/
+flutter_plugin_android_lifecycle=/home/felix/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_plugin_android_lifecycle-1.0.11/
+image_picker=/home/felix/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/image_picker-0.6.7+22/

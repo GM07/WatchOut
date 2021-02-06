@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import '../widgets/waste_saved.dart';
 import '../widgets/watch_out.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
-import 'dart:developer';
+import 'package:image_picker/image_picker.dart';
+import 'package:string_similarity/string_similarity.dart';
 
 class Home extends StatefulWidget {
   const Home({Key key}) : super(key: key);
@@ -15,7 +16,28 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  _openCamera() async {}
+  _openCamera() async {
+    File awaitImage =
+        File((await ImagePicker().getImage(source: ImageSource.gallery)).path);
+    _recognizeText(awaitImage);
+  }
+
+  _recognizeText(File image) async {
+    final FirebaseVisionImage visionImage = FirebaseVisionImage.fromFile(image);
+    final TextRecognizer textRecognizer =
+        FirebaseVision.instance.textRecognizer();
+    final VisionText visionText =
+        await textRecognizer.processImage(visionImage);
+    for (TextBlock block in visionText.blocks) {
+      for (TextLine line in block.lines) {
+        for (TextElement element in line.elements) {
+          print(element.text
+              .bestMatch(['tomato', 'pizza', 'ananas', 'linguine']));
+        }
+      }
+    }
+    textRecognizer.close();
+  }
 
   @override
   void initState() {
@@ -27,7 +49,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         backgroundColor: Theme.of(context).primaryColor,
-        onPressed: () => Navigator.pushNamed(context, '/new_list'),
+        onPressed: () => _openCamera(),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: Container(

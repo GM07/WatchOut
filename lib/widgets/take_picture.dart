@@ -1,5 +1,7 @@
 import 'dart:io';
+import 'package:WatchOut/classes/client.dart';
 import 'package:WatchOut/classes/ingredient.dart';
+import 'package:WatchOut/theme.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:string_similarity/string_similarity.dart';
 import 'package:flutter/material.dart';
@@ -92,6 +94,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
     for (TextBlock block in visionText.blocks) {
       for (TextLine line in block.lines) {
         for (TextElement element in line.elements) {
+          print(Client.items.elementAt(0));
           if (isNumeric(element.text)) {
             quantite = int.parse(element.text);
             ingredientList.add(Ingredient(
@@ -102,7 +105,9 @@ class TakePictureScreenState extends State<TakePictureScreen> {
               ingredientList.add(
                   Ingredient(date: DateTime.now(), quantity: 1, title: item));
             }
-            item = element.text;
+
+            item = element.text.bestMatch(Client.items).toString();
+            print(item);
           }
         }
       }

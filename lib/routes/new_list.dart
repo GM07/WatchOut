@@ -80,7 +80,7 @@ class NewListState extends State<NewList> {
       return Container(
         margin: EdgeInsets.all(4.0),
         decoration: BoxDecoration(
-          color: Client.watchOut(e) ? Colors.orange : Colors.white,
+          color: Client.watchOut(e) ? Colors.orange[100] : Colors.white,
           border: Border.all(
             color: Theme.of(context).primaryColor,
           ),

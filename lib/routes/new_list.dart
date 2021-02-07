@@ -118,6 +118,7 @@ class NewListState extends State<NewList> {
             //Expanded(
             //flex: 1,
             IconButton(
+              splashColor: Colors.transparent,
               icon: Icon(
                 Icons.remove,
                 color: Theme.of(context).primaryColor,
@@ -158,6 +159,7 @@ class NewListState extends State<NewList> {
             //Expanded(
             //flex: 1,
             IconButton(
+              splashColor: Colors.transparent,
               icon: Icon(
                 Icons.add,
                 color: Theme.of(context).primaryColor,

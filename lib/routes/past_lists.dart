@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:WatchOut/classes/client.dart';
 import 'package:WatchOut/classes/ingredient.dart';
 import 'package:WatchOut/widgets/custom_button.dart';
-import 'package:expandable_group/expandable_group.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -195,7 +194,8 @@ class _PastListsState extends State<PastLists> {
                       maintainState: false,
                       initiallyExpanded: false,
                       title: Text(
-                        "(${list.numberWasted} ITEMS WASTED)\t ${f.format(list.date)}",
+                        "${f.format(list.date)}",
+                        style: TextStyle(color: Colors.black),
                       ),
                       children: currentItems(list, context));
                 }).toList(),

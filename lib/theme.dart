@@ -10,4 +10,7 @@ ThemeData watchOutTheme = ThemeData(
   scaffoldBackgroundColor: Colors.white,
   dialogBackgroundColor: contrastBackground,
   visualDensity: VisualDensity.adaptivePlatformDensity,
+  textTheme: TextTheme(subtitle1: TextStyle(color: Colors.red[400])),
+  accentColor: Colors.red[400],
+  unselectedWidgetColor: Colors.red[400],
 );

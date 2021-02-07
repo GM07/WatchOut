@@ -22,31 +22,27 @@ class _PastListsState extends State<PastLists> {
       shape: RoundedRectangleBorder(
         borderRadius: new BorderRadius.only(
             topLeft: const Radius.circular(20.0),
-            topRight: const Radius.circular(20.0)
-        ),
+            topRight: const Radius.circular(20.0)),
       ),
       context: context,
       builder: (BuildContext context) {
         return Wrap(
-            children: <Widget>[
-              Container(
-                margin: EdgeInsets.all(8.0),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                ),
-                child: Column(
-                  children: <Widget>[
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.all(8.0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+              ),
+              child: Column(
+                children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.symmetric(
-                        vertical: 10,
-                        horizontal: 10
-                    ),
+                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                         e.title,
+                        e.title,
                         style: TextStyle(
                           fontSize: 20,
                           color: Theme.of(context).primaryColor,
@@ -55,9 +51,7 @@ class _PastListsState extends State<PastLists> {
                         textAlign: TextAlign.center,
                       ),
                       Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 3
-                        ),
+                        padding: EdgeInsets.symmetric(horizontal: 3),
                       ),
                       Text(
                         '(' + e.quantity.toString() + ')',
@@ -68,28 +62,22 @@ class _PastListsState extends State<PastLists> {
                         ),
                         textAlign: TextAlign.center,
                       )
-                  ],
+                    ],
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(
-                        vertical: 10,
-                        horizontal: 10
-                    ),
+                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                   ),
                   Text(
-                      "Number wasted:",
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Theme.of(context).primaryColor,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
+                    "Number wasted:".toUpperCase(),
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Theme.of(context).primaryColor,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(
-                        vertical: 10,
-                        horizontal: 10
-                    ),
+                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                   ),
                   //Expanded(
                   //flex: 1,
@@ -101,11 +89,13 @@ class _PastListsState extends State<PastLists> {
                           Icons.remove,
                           color: Theme.of(context).primaryColor,
                         ),
-                        padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 9.0),
+                        padding: EdgeInsets.symmetric(
+                            vertical: 4.0, horizontal: 9.0),
                         iconSize: 24.0,
                         color: Theme.of(context).primaryColor,
                         onPressed: () {
-                          int value = max(int.parse(valueInputController.text) - 1, 0);
+                          int value =
+                              max(int.parse(valueInputController.text) - 1, 0);
                           valueInputController.text = value.toString();
                         },
                       ),
@@ -129,29 +119,30 @@ class _PastListsState extends State<PastLists> {
                           Icons.add,
                           color: Theme.of(context).primaryColor,
                         ),
-                        padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 9.0),
+                        padding: EdgeInsets.symmetric(
+                            vertical: 4.0, horizontal: 9.0),
                         iconSize: 24.0,
                         color: Theme.of(context).primaryColor,
                         onPressed: () {
-                          int value = min(int.parse(valueInputController.text) + 1, e.quantity);
+                          int value = min(
+                              int.parse(valueInputController.text) + 1,
+                              e.quantity);
                           valueInputController.text = value.toString();
                         },
                       ),
                     ],
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(
-                        vertical: 10,
-                        horizontal: 10
-                    ),
+                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                   ),
                   Center(
                     child: CustomButton(
-                    onPressed: () {
-                      Client.onIngredientThrown(e, int.parse(valueInputController.text));
-                      Navigator.pop(context);
-                    },
-                    title: "Confirm",
+                      onPressed: () {
+                        Client.onIngredientThrown(
+                            e, int.parse(valueInputController.text));
+                        Navigator.pop(context);
+                      },
+                      title: "Confirm",
                     ),
                   ),
                 ],
@@ -183,14 +174,13 @@ class _PastListsState extends State<PastLists> {
         Container(
           child: Padding(
             padding: const EdgeInsets.all(16.0).add(EdgeInsets.only(top: 8.0)),
-            child: Center(
-                child: CustomButton(
+            child: CustomButton(
               onPressed: () async {
                 await Client.filelist.delete(recursive: false);
                 setState(() {});
               },
-              title: "My Lists",
-            )),
+              title: "My Lists".toUpperCase(),
+            ),
           ),
         ),
         Client.backupLists == null || Client.backupLists.keys == null

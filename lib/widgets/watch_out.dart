@@ -15,15 +15,18 @@ class _WatchOutState extends State<WatchOut> {
 
     for (String s in list) {
       if (s != null) {
-        w_list.add(Text(
-          s,
-          style: TextStyle(
-            color: Theme.of(context).primaryColor,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
+        w_list.add(Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            s.toUpperCase(),
+            style: TextStyle(
+              color: Theme.of(context).primaryColor,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+            softWrap: true,
+            textAlign: TextAlign.center,
           ),
-          softWrap: true,
-          textAlign: TextAlign.center,
         ));
       }
     }
@@ -37,7 +40,7 @@ class _WatchOutState extends State<WatchOut> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
-          'You should be careful with'.toUpperCase(),
+          'You tend to waste '.toUpperCase(),
           style: TextStyle(
             color: Colors.black,
             fontSize: 24,

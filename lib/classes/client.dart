@@ -87,7 +87,7 @@ class Client {
         print(key);
         return MapEntry<String, FoodList>(key, FoodList());
       }
-
+      print(value);
       return MapEntry<String, FoodList>(
           key,
           FoodList(
@@ -98,6 +98,7 @@ class Client {
 
   // Adds current ingredient list to backup
   static Future addListToBackup() async {
+    if (ingredients.date == null || ingredients.items == null) return;
     backupLists.addAll({DateTime.now().toString(): ingredients});
 
     if (!await filelist.exists()) {

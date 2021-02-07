@@ -124,7 +124,8 @@ class _NewListState extends State<NewList> {
               iconSize: 24.0,
               color: Theme.of(context).primaryColor,
               onPressed: () {
-                int value = min(int.parse(valueInputController.text) + 1, 9223372036854775807);
+                int value = min(int.parse(valueInputController.text) + 1,
+                    9223372036854775807);
                 valueInputController.text = value.toString();
                 setState(() {
                   e.quantity = value;
@@ -153,8 +154,9 @@ class _NewListState extends State<NewList> {
       child: ListView(
         children: <Widget>[
           Container(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0).add(EdgeInsets.only(top: 8.0)),
+            child: Padding(
+              padding:
+                  const EdgeInsets.all(16.0).add(EdgeInsets.only(top: 8.0)),
               child: Center(
                   child: CustomButton(
                 onPressed: () => _openCamera(context),
@@ -164,7 +166,7 @@ class _NewListState extends State<NewList> {
           ),
           ...currentItems(),
         ],
-    ),
+      ),
     ));
   }
 }

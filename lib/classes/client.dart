@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:WatchOut/widgets/IngredientHistoryHandler.dart';
 import 'package:flutter/services.dart';
 
 import 'ingredient.dart';
@@ -40,7 +41,7 @@ class Client {
     List<Ingredient> list = List<Ingredient>();
 
     for (dynamic elem in element) {
-      print(elem);
+      list.add(Ingredient.fromMap(elem));
     }
 
     return list;
@@ -51,9 +52,9 @@ class Client {
       return;
     }
 
-    String jsonString = await rootBundle.loadString(file.path);
+    String jsonString = await file.readAsString();
     Map<String, dynamic> map = jsonDecode(jsonString);
-    map.map((String key, dynamic value) {
+    map = map.map((String key, dynamic value) {
       if (value == null) {
         print(key);
         return MapEntry<String, FoodList>(key, FoodList());
@@ -65,6 +66,7 @@ class Client {
               date: DateTime.parse(value['date']),
               items: getListFromJsonElement(value['items'])));
     });
+    print(map);
   }
 
   // Adds current ingredient list to backup

@@ -107,7 +107,11 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             }
 
             print(element.text);
-            item = element.text.bestMatch(Client.items).bestMatch.target;
+            item = element.text
+                .toLowerCase()
+                .bestMatch(Client.items)
+                .bestMatch
+                .target;
             print(item);
           }
         }
@@ -119,7 +123,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
     }
     cloudTextRecognizer.close();
     for (Ingredient ingredient in ingredientList) {
-      // print(ingredient.title + " " + ingredient.quantity.toString());
+      print(ingredient.title + " " + ingredient.quantity.toString());
     }
     return ingredientList;
   }

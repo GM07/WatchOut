@@ -37,7 +37,6 @@ class Client {
   }
 
   static List<Ingredient> getListFromJsonElement(dynamic element) {
-    print(element);
     List<Ingredient> list = List<Ingredient>();
 
     for (dynamic elem in element) {
@@ -54,7 +53,7 @@ class Client {
 
     String jsonString = await file.readAsString();
     Map<String, dynamic> map = jsonDecode(jsonString);
-    map = map.map((String key, dynamic value) {
+    backupLists = map.map((String key, dynamic value) {
       if (value == null) {
         print(key);
         return MapEntry<String, FoodList>(key, FoodList());
@@ -66,7 +65,6 @@ class Client {
               date: DateTime.parse(value['date']),
               items: getListFromJsonElement(value['items'])));
     });
-    print(map);
   }
 
   // Adds current ingredient list to backup

@@ -28573,13 +28573,6 @@
             "products": 92
         },
         {
-            "id": "en:breader",
-            "url": "https://world.openfoodfacts.org/ingredient/breader",
-            "name": "breader",
-            "products": 92,
-            "known": 0
-        },
-        {
             "known": 0,
             "products": 92,
             "name": "cultured-pasteurized-milk-and-skim-milk",

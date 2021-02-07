@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:WatchOut/classes/client.dart';
 import 'package:WatchOut/classes/ingredient.dart';
+import 'package:WatchOut/routes/new_list.dart';
 import 'package:WatchOut/theme.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:string_similarity/string_similarity.dart';
@@ -15,9 +16,9 @@ import 'package:string_similarity/string_similarity.dart';
 import 'package:WatchOut/classes/file_handler.dart';
 
 class TakePictureScreen extends StatefulWidget {
-  const TakePictureScreen({
-    Key key,
-  }) : super(key: key);
+  const TakePictureScreen({Key key, Function this.update});
+
+  final Function update;
 
   @override
   TakePictureScreenState createState() => TakePictureScreenState();
@@ -75,7 +76,10 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
       Navigator.pop(context, filePath);
 
-      List<Ingredient> ingredients = await _recognizeText(File(filePath));
+      Client.ingredients = FoodList(
+          date: DateTime.now(), items: await _recognizeText(File(filePath)));
+
+      widget.update();
     } catch (e) {
       // If an error occurs, log the error to the console.
       print('CAMERA : ' + Camera.mainCamera.toString());
@@ -94,7 +98,6 @@ class TakePictureScreenState extends State<TakePictureScreen> {
     for (TextBlock block in visionText.blocks) {
       for (TextLine line in block.lines) {
         for (TextElement element in line.elements) {
-          // print(Client.items.elementAt(0));
           if (isNumeric(element.text)) {
             quantite = int.parse(element.text);
             ingredientList.add(Ingredient(
@@ -106,13 +109,9 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                   Ingredient(date: DateTime.now(), quantity: 1, title: item));
             }
 
-            print(element.text);
-            item = element.text
-                .toLowerCase()
-                .bestMatch(Client.items)
-                .bestMatch
-                .target;
-            print(item);
+            item = element.text[0].toUpperCase() +
+                element.text.substring(1, element.text.length).toLowerCase();
+            item = item.bestMatch(Client.items).bestMatch.target;
           }
         }
       }

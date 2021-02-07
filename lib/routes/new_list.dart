@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 
+import 'package:WatchOut/classes/client.dart';
 import 'package:WatchOut/classes/ingredient.dart';
 import 'package:WatchOut/widgets/ingredient_tile.dart';
 import 'package:flutter/material.dart';
@@ -13,11 +14,14 @@ import 'package:path/path.dart' show join;
 import 'package:path_provider/path_provider.dart';
 
 class NewList extends StatefulWidget {
+  GlobalKey<NewListState> key;
+  NewList({this.key}) : super(key: key);
+
   @override
-  _NewListState createState() => _NewListState();
+  NewListState createState() => NewListState();
 }
 
-class _NewListState extends State<NewList> {
+class NewListState extends State<NewList> {
   CameraController _controller;
   Future<void> _initializeControllerFuture;
 
@@ -45,7 +49,13 @@ class _NewListState extends State<NewList> {
   }
 
   List<Widget> currentItems() {
-    return testList.map((Ingredient e) {
+    if (Client.ingredients == null ||
+        Client.ingredients.items == null ||
+        Client.ingredients.items.isEmpty) {
+      return List<Widget>();
+    }
+
+    return Client.ingredients.items.map((Ingredient e) {
       TextEditingController valueInputController = new TextEditingController();
       valueInputController.text = e.quantity.toString();
 
@@ -140,15 +150,25 @@ class _NewListState extends State<NewList> {
   }
 
   _openCamera(BuildContext context) async {
-    Navigator.push(
+    await Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => TakePictureScreen(),
+          builder: (context) => TakePictureScreen(
+            update: () {
+              setState(() {});
+            },
+          ),
         ));
+
+    setState(() {
+      print(Client.ingredients.items);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    print('rebuilt');
+
     return Scaffold(
         body: Container(
       child: ListView(

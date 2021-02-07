@@ -37,10 +37,17 @@ dependencies:
   path:
   expandable_group: ^0.0.7
   charts_flutter: ^0.9.0
+  flutter_launcher_icons: "^0.8.0"
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.3
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "images/Logo.png"
+
 
 dev_dependencies:
   flutter_test:

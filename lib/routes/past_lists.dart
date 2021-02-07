@@ -15,20 +15,149 @@ class PastLists extends StatefulWidget {
 
 class _PastListsState extends State<PastLists> {
   void buildBottomSheet(BuildContext context, Ingredient e) {
-    showModalBottomSheet(
+    TextEditingController valueInputController = new TextEditingController();
+    valueInputController.text = "0";
+
+    showModalBottomSheet<dynamic>(
+      shape: RoundedRectangleBorder(
+        borderRadius: new BorderRadius.only(
+            topLeft: const Radius.circular(20.0),
+            topRight: const Radius.circular(20.0)
+        ),
+      ),
       context: context,
       builder: (BuildContext context) {
-        return Container(
-          margin: EdgeInsets.all(8.0),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Center(
-            child: CustomButton(
-              onPressed: () => {},
-              title: "Watch Out for that Potatoe",
+        return Wrap(
+            children: <Widget>[
+              Container(
+                margin: EdgeInsets.all(8.0),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                ),
+                child: Column(
+                  children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        vertical: 10,
+                        horizontal: 10
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                         e.title,
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Theme.of(context).primaryColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 3
+                        ),
+                      ),
+                      Text(
+                        '(' + e.quantity.toString() + ')',
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Theme.of(context).primaryColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      )
+                  ],
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        vertical: 10,
+                        horizontal: 10
+                    ),
+                  ),
+                  Text(
+                      "Number wasted:",
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Theme.of(context).primaryColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        vertical: 10,
+                        horizontal: 10
+                    ),
+                  ),
+                  //Expanded(
+                  //flex: 1,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      IconButton(
+                        icon: Icon(
+                          Icons.remove,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 9.0),
+                        iconSize: 24.0,
+                        color: Theme.of(context).primaryColor,
+                        onPressed: () {
+                          int value = max(int.parse(valueInputController.text) - 1, 0);
+                          valueInputController.text = value.toString();
+                        },
+                      ),
+                      //),
+                      Container(
+                        width: 100,
+                        child: TextField(
+                          maxLines: 1,
+                          controller: valueInputController,
+                          keyboardType: TextInputType.number,
+                          textAlign: TextAlign.center,
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.digitsOnly
+                          ], // Only numbers can be entered
+                        ),
+                      ),
+                      //Expanded(
+                      //flex: 1,
+                      IconButton(
+                        icon: Icon(
+                          Icons.add,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 9.0),
+                        iconSize: 24.0,
+                        color: Theme.of(context).primaryColor,
+                        onPressed: () {
+                          int value = min(int.parse(valueInputController.text) + 1, e.quantity);
+                          valueInputController.text = value.toString();
+                        },
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        vertical: 10,
+                        horizontal: 10
+                    ),
+                  ),
+                  Center(
+                    child: CustomButton(
+                    onPressed: () {
+                      Client.onIngredientThrown(e, int.parse(valueInputController.text));
+                      Navigator.pop(context);
+                    },
+                    title: "Confirm",
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
+          ],
         );
       },
     );

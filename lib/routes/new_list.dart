@@ -39,7 +39,7 @@ class NewListState extends State<NewList> {
 
     );
     //Client.ingredients.items = [];
-    //for(int i = 0; i < 20; ++i){
+    //for(int i = 0; i < 5; ++i){
     //  Client.ingredients.items.add(Ingredient(title: i.toString(), date: DateTime.now(), quantity: i, bought: true ));
     //}
 

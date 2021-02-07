@@ -38,7 +38,11 @@ class NewListState extends State<NewList> {
 
 
     );
-    //Client.ingredients.items = [Ingredient(title: "b", date: DateTime.now(), quantity: 1, bought: true )];
+    //Client.ingredients.items = [];
+    //for(int i = 0; i < 20; ++i){
+    //  Client.ingredients.items.add(Ingredient(title: i.toString(), date: DateTime.now(), quantity: i, bought: true ));
+    //}
+
 
     // Next, initialize the controller. This returns a Future.
     _initializeControllerFuture = _controller.initialize();
@@ -55,7 +59,21 @@ class NewListState extends State<NewList> {
     if (Client.ingredients == null ||
         Client.ingredients.items == null ||
         Client.ingredients.items.isEmpty) {
-      return List<Widget>();
+      return [
+        Container(
+          child: Text(
+              "No items currently",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Theme.of(context).primaryColor,
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+          ),
+
+        )
+
+      ];
     }
 
     return Client.ingredients.items.map((Ingredient e) {
@@ -203,6 +221,20 @@ class NewListState extends State<NewList> {
             ),
           ),
           ...currentItems(),
+          Client.ingredients == null || Client.ingredients.items == null || Client.ingredients.items.isEmpty ? const SizedBox.shrink() :
+          Padding(
+            padding:
+              const EdgeInsets.all(16.0).add(EdgeInsets.only(top: 8.0)),
+            child: Center(
+              child: CustomButton(
+              onPressed: () {
+                Client.addListToBackup();
+                Client.ingredients = FoodList();
+                Navigator.popAndPushNamed(context, '/');
+              },
+              title: "Confirm my list",
+            )),
+          ),
         ],
       ),
     ));

@@ -69,7 +69,7 @@ class Client {
 
   // Adds current ingredient list to backup
   static Future addListToBackup() async {
-    // backupLists.addAll({DateTime.now().toString(): ingredients});
+    backupLists.addAll({DateTime.now().toString(): ingredients});
 
     if (!await file.exists()) {
       file.create(recursive: false);

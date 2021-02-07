@@ -11,7 +11,7 @@ import 'file_handler.dart';
 import 'package:WatchOut/classes/ingredient.dart';
 
 class Client {
-  static FoodList ingredients = FoodList();
+  static FoodList ingredients = FoodList(items: List<Ingredient>());
   static Map<String, FoodList> backupLists;
   static Map<Ingredient, int> scores = Map();
 
@@ -65,6 +65,8 @@ class Client {
               date: DateTime.parse(value['date']),
               items: getListFromJsonElement(value['items'])));
     });
+
+    print(backupLists);
   }
 
   // Adds current ingredient list to backup

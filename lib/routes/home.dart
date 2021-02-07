@@ -1,4 +1,4 @@
-
+import 'package:WatchOut/routes/past_lists.dart';
 import 'package:WatchOut/widgets/IngredientHistoryHandler.dart';
 import 'dart:io';
 import 'package:WatchOut/widgets/ingredient_list.dart';
@@ -30,7 +30,7 @@ class _HomeState extends State<Home> {
 
   Widget _getCurrentWidget() {
     if (_currentIndex == 0) {
-      return IngredientTile();
+      return PastLists();
     } else if (_currentIndex == 1) {
       return MainPage();
     } else {

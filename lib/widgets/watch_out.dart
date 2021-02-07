@@ -1,3 +1,5 @@
+import 'package:WatchOut/classes/client.dart';
+import 'package:WatchOut/classes/ingredient.dart';
 import 'package:flutter/material.dart';
 
 class WatchOut extends StatefulWidget {
@@ -6,20 +8,46 @@ class WatchOut extends StatefulWidget {
 }
 
 class _WatchOutState extends State<WatchOut> {
+  List<Widget> worstFoods() {
+    List<String> list = Client.worstIngredients();
+
+    List<Widget> w_list = List<Widget>();
+
+    for (String s in list) {
+      if (s != null) {
+        w_list.add(Text(
+          s,
+          style: TextStyle(
+            color: Theme.of(context).primaryColor,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+          softWrap: true,
+          textAlign: TextAlign.center,
+        ));
+      }
+    }
+
+    return w_list;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Center(
-      heightFactor: 1,
-      child: Text(
-        'You should be careful with your potatoes'.toUpperCase(),
-        style: TextStyle(
-          color: Colors.black,
-          fontSize: 24,
-          fontWeight: FontWeight.bold,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Text(
+          'You should be careful with'.toUpperCase(),
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
+          softWrap: true,
+          textAlign: TextAlign.center,
         ),
-        softWrap: true,
-        textAlign: TextAlign.center,
-      ),
+        ...worstFoods()
+      ],
     );
   }
 }

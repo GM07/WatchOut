@@ -5,6 +5,13 @@ class Ingredient {
   bool bought;
 
   Ingredient({this.title, this.date, this.quantity, this.bought = false});
+
+  Ingredient.fromJson(Map<String, dynamic> json) {
+    this.title = json['title'];
+    this.quantity = 0;
+    this.bought = false;
+    this.date = DateTime.now();
+  }
 }
 
 List<Ingredient> testList = List.generate(

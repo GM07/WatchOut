@@ -17,23 +17,6 @@ class TakePictureScreen extends StatefulWidget {
     Key key,
   }) : super(key: key);
 
-  static recognizeText(File image) async {
-    final FirebaseVisionImage visionImage = FirebaseVisionImage.fromFile(image);
-    final TextRecognizer cloudTextRecognizer =
-        FirebaseVision.instance.cloudTextRecognizer();
-    final VisionText visionText =
-        await cloudTextRecognizer.processImage(visionImage);
-    for (TextBlock block in visionText.blocks) {
-      for (TextLine line in block.lines) {
-        for (TextElement element in line.elements) {
-          print(element.text);
-          // .bestMatch(['tomato', 'pizza', 'ananas', 'linguine']));
-        }
-      }
-    }
-    cloudTextRecognizer.close();
-  }
-
   @override
   TakePictureScreenState createState() => TakePictureScreenState();
 }
@@ -116,13 +99,17 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             item = null;
           } else {
             if (item != null) {
-              ingredientList.add(Ingredient(
-                  date: DateTime.now(), quantity: 1, title: element.text));
-            } else
-              item = element.text;
+              ingredientList.add(
+                  Ingredient(date: DateTime.now(), quantity: 1, title: item));
+            }
+            item = element.text;
           }
         }
       }
+    }
+    if (item != null) {
+      ingredientList
+          .add(Ingredient(date: DateTime.now(), quantity: 1, title: item));
     }
     cloudTextRecognizer.close();
     for (Ingredient ingredient in ingredientList) {

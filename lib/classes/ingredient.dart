@@ -12,6 +12,16 @@ class FoodList {
   }
 }
 
+class DechetList {
+  String nom;
+  int quantite;
+  DechetList({this.nom, this.quantite});
+
+  Map toJson() {
+    return {'nom': nom, 'quantite': quantite.toString};
+  }
+}
+
 class Ingredient {
   String title;
   DateTime date;

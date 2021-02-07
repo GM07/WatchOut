@@ -108,6 +108,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             item = element.text[0].toUpperCase() +
                 element.text.substring(1, element.text.length).toLowerCase();
             item = item.bestMatch(Client.items).bestMatch.target;
+            if (item == "undefined") item = null;
           }
         }
       }

@@ -73,8 +73,8 @@ class Client {
     }
     int thrown =
         scores.containsKey(ingredient.title) ? scores[ingredient.title] : 0;
-    if (quantity != 0 && thrown / quantity < 0.25) return true;
-    return false;
+    if (quantity == 0 || thrown / quantity < 0.25) return false;
+    return true;
   }
 
   static List<String> worstIngredients() {

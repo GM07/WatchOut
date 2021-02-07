@@ -14,7 +14,7 @@ class PastLists extends StatefulWidget {
 }
 
 class _PastListsState extends State<PastLists> {
-  void buildBottomSheet(BuildContext context) {
+  void buildBottomSheet(BuildContext context, Ingredient e) {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -67,28 +67,23 @@ class _PastListsState extends State<PastLists> {
         Client.backupLists == null || Client.backupLists.keys == null
             ? const SizedBox.shrink()
             : Column(
-                children: Client.backupLists.keys.map((key) {
+                children: Client.backupLists.keys.toList().reversed.map((key) {
                   FoodList list = Client.backupLists[key];
                   final f = new DateFormat('EEEE, d MMM, yyyy');
-                  return GestureDetector(
-                    onLongPress: () {
-                      buildBottomSheet(context);
-                    },
-                    child: ExpansionTile(
-                        maintainState: false,
-                        initiallyExpanded: false,
-                        title: Text(
-                          "${f.format(list.date)}",
-                        ),
-                        children: currentItems(list.items)),
-                  );
+                  return ExpansionTile(
+                      maintainState: false,
+                      initiallyExpanded: false,
+                      title: Text(
+                        "${f.format(list.date)}",
+                      ),
+                      children: currentItems(list.items, context));
                 }).toList(),
               )
       ],
     );
   }
 
-  List<Widget> currentItems(List<Ingredient> list) {
+  List<Widget> currentItems(List<Ingredient> list, BuildContext context) {
     if (list == null || list.isEmpty) {
       return List<Widget>();
     }
@@ -99,39 +94,44 @@ class _PastListsState extends State<PastLists> {
       valueInputController.text = e.quantity.toString();
       nameInputController.text = e.title;
 
-      return Container(
-        margin: EdgeInsets.all(4.0),
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: Theme.of(context).primaryColor,
+      return GestureDetector(
+        onLongPress: () {
+          buildBottomSheet(context, e);
+        },
+        child: Container(
+          margin: EdgeInsets.all(4.0),
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: Theme.of(context).primaryColor,
+            ),
           ),
-        ),
-        child: Row(
-          children: <Widget>[
-            Expanded(
-              flex: 9,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: Container(
-                  child: ListTile(
-                    title: Text(
-                      e.title,
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                        fontWeight: FontWeight.bold,
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                flex: 9,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Container(
+                    child: ListTile(
+                      title: Text(
+                        e.title,
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.left,
                       ),
-                      textAlign: TextAlign.left,
                     ),
                   ),
                 ),
               ),
-            ),
-            Expanded(
-              flex: 1,
-              child: Text(e.quantity.toString()),
-            ),
-            //),
-          ],
+              Expanded(
+                flex: 1,
+                child: Text(e.quantity.toString()),
+              ),
+              //),
+            ],
+          ),
         ),
       );
     }).toList();

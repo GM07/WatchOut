@@ -119,7 +119,7 @@ class _PastListsState extends State<PastLists> {
                           textAlign: TextAlign.center,
                           inputFormatters: <TextInputFormatter>[
                             FilteringTextInputFormatter.digitsOnly
-                          ], // Only numbers can be entered
+                          ], //  Only numbers can be entered
                         ),
                       ),
                       //Expanded(

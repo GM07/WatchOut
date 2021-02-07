@@ -12,7 +12,7 @@ import 'package:WatchOut/classes/ingredient.dart';
 
 class Client {
   static FoodList ingredients = FoodList(items: List<Ingredient>());
-  static Map<String, FoodList> backupLists;
+  static Map<String, FoodList> backupLists = Map();
   static Map<String, int> scores = Map();
 
   static List<String> items;

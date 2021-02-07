@@ -18,11 +18,7 @@ void main() async {
 
   Client.items = (await loadJsonIngredients('assets/ingredients.json'));
 
-  Client.addRandomLists();
-
   await Client.loadScores();
-
-  await Client.addListToBackup();
 
   await Client.loadListsFromBackup();
 

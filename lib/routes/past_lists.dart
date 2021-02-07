@@ -56,29 +56,34 @@ class _PastListsState extends State<PastLists> {
             padding: const EdgeInsets.all(16.0).add(EdgeInsets.only(top: 8.0)),
             child: Center(
                 child: CustomButton(
-              onPressed: () => {},
+              onPressed: () async {
+                await Client.filelist.delete(recursive: false);
+                setState(() {});
+              },
               title: "My Lists",
             )),
           ),
         ),
-        Column(
-          children: Client.backupLists.keys.map((key) {
-            FoodList list = Client.backupLists[key];
-            final f = new DateFormat('EEEE, d MMM, yyyy');
-            return GestureDetector(
-              onLongPress: () {
-                buildBottomSheet(context);
-              },
-              child: ExpansionTile(
-                  maintainState: false,
-                  initiallyExpanded: false,
-                  title: Text(
-                    "${f.format(list.date)}",
-                  ),
-                  children: currentItems(list.items)),
-            );
-          }).toList(),
-        )
+        Client.backupLists == null || Client.backupLists.keys == null
+            ? const SizedBox.shrink()
+            : Column(
+                children: Client.backupLists.keys.map((key) {
+                  FoodList list = Client.backupLists[key];
+                  final f = new DateFormat('EEEE, d MMM, yyyy');
+                  return GestureDetector(
+                    onLongPress: () {
+                      buildBottomSheet(context);
+                    },
+                    child: ExpansionTile(
+                        maintainState: false,
+                        initiallyExpanded: false,
+                        title: Text(
+                          "${f.format(list.date)}",
+                        ),
+                        children: currentItems(list.items)),
+                  );
+                }).toList(),
+              )
       ],
     );
   }

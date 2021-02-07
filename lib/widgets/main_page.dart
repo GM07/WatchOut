@@ -1,8 +1,9 @@
 import 'package:WatchOut/classes/client.dart';
 import 'package:WatchOut/classes/ingredient.dart';
+import 'package:WatchOut/widgets/simple_line_chart.dart';
 import 'package:flutter/material.dart';
-import '../widgets/waste_saved.dart';
 import '../widgets/watch_out.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
 
 class MainPage extends StatefulWidget {
   @override
@@ -27,6 +28,26 @@ class _MainPageState extends State<MainPage> {
     }
 
     return getWidgets(subList, context);
+  }
+
+  /// Create one series with sample hard coded data.
+  static List<charts.Series<LinearSales, int>> _createSampleData() {
+    final data = [
+      new LinearSales(0, 5),
+      new LinearSales(1, 25),
+      new LinearSales(2, 100),
+      new LinearSales(3, 75),
+    ];
+
+    return [
+      new charts.Series<LinearSales, int>(
+        id: 'Sales',
+        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+        domainFn: (LinearSales sales, _) => sales.year,
+        measureFn: (LinearSales sales, _) => sales.sales,
+        data: data,
+      )
+    ];
   }
 
   @override
@@ -80,7 +101,7 @@ class _MainPageState extends State<MainPage> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Container(
-                child: WasteSaved(),
+                child: SimpleLineChart(_createSampleData()),
               ),
             ),
           ),
@@ -155,4 +176,12 @@ class _MainPageState extends State<MainPage> {
       );
     }).toList();
   }
+}
+
+/// Sample linear data type.
+class LinearSales {
+  final int year;
+  final int sales;
+
+  LinearSales(this.year, this.sales);
 }

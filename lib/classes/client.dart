@@ -140,18 +140,14 @@ class Client {
     Map<String, dynamic> map = jsonDecode(jsonString);
     backupLists = map.map((String key, dynamic value) {
       if (value == null) {
-        print(key);
         return MapEntry<String, FoodList>(key, FoodList());
       }
-      print(value);
       return MapEntry<String, FoodList>(
           key,
           FoodList(
               date: DateTime.parse(value['date']),
               items: getListFromJsonElement(value['items'])));
     });
-
-    print(backupLists);
   }
 
   // Adds current ingredient list to backup

@@ -1,14 +1,4 @@
 import 'package:WatchOut/routes/past_lists.dart';
-import 'package:WatchOut/widgets/IngredientHistoryHandler.dart';
-import 'dart:io';
-import 'package:WatchOut/widgets/ingredient_list.dart';
-import 'package:WatchOut/widgets/ingredient_tile.dart';
-import 'package:flutter/material.dart';
-import '../widgets/waste_saved.dart';
-import '../widgets/watch_out.dart';
-import 'package:firebase_ml_vision/firebase_ml_vision.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:string_similarity/string_similarity.dart';
 import 'package:flutter/material.dart';
 import '../widgets/main_page.dart';
 import 'new_list.dart';

@@ -218,24 +218,15 @@ class NewListState extends State<NewList> {
               : Padding(
                   padding:
                       const EdgeInsets.all(16.0).add(EdgeInsets.only(top: 8.0)),
-<<<<<<< HEAD
-                  child: CustomButton(
-=======
                   child: Center(
                       child: CustomButton(
->>>>>>> 99b38e58a89672a42ce3b8531b8dad2c6b0c6ab0
                     onPressed: () {
                       Client.addListToBackup();
                       Client.ingredients = FoodList();
                       Navigator.popAndPushNamed(context, '/');
                     },
-<<<<<<< HEAD
-                    title: "Confirm my list".toUpperCase(),
-                  ),
-=======
                     title: "Confirm my list",
                   )),
->>>>>>> 99b38e58a89672a42ce3b8531b8dad2c6b0c6ab0
                 ),
         ],
       ),

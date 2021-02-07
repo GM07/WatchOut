@@ -52,10 +52,9 @@ class _HomeState extends State<Home> {
           showSelectedLabels: false,
           showUnselectedLabels: false,
           items: [
-            BottomNavigationBarItem(
-                icon: Icon(Icons.shopping_cart), title: Text('')),
-            BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('')),
-            BottomNavigationBarItem(icon: Icon(Icons.add), title: Text('')),
+            BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: ''),
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
+            BottomNavigationBarItem(icon: Icon(Icons.add), label: ''),
           ],
         ),
         body: _getCurrentWidget());

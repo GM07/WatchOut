@@ -159,18 +159,18 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                           onPressed: () {
                             Navigator.pop(context, null);
                           },
+                          backgroundColor: Theme.of(context).primaryColor,
                           child: Icon(
                             Icons.clear,
-                            color: Theme.of(context).errorColor,
                           ),
                         ),
                         // Search button
                         FloatingActionButton(
                           heroTag: 'TakePictureButtonCamera',
                           onPressed: takePicture,
+                          backgroundColor: Theme.of(context).primaryColor,
                           child: Icon(
                             Icons.camera_alt,
-                            color: Theme.of(context).primaryColor,
                           ),
                         ),
                       ],

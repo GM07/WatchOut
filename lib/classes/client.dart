@@ -1,6 +1,7 @@
 import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:WatchOut/widgets/IngredientHistoryHandler.dart';
 import 'package:flutter/services.dart';
@@ -119,5 +120,19 @@ class Client {
 
     String jsonMap = jsonEncode(backupLists);
     filelist.writeAsString(jsonMap);
+  }
+
+  static FoodList getLastFoodList() {
+    if (backupLists == null || backupLists.keys == null) {
+      print('test');
+      return null;
+    }
+
+    List<DateTime> dates =
+        backupLists.keys.map((e) => DateTime.parse(e)).toList();
+
+    dates.sort((a, b) => a.isBefore(b) ? 1 : 0);
+
+    return backupLists[dates[0].toString()];
   }
 }

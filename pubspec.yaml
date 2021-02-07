@@ -24,7 +24,6 @@ dependencies:
   flutter:
     sdk: flutter
 
-
   animated_bottom_navigation_bar: ^0.2.1
   intl: ^0.16.1
   firebase_ml_vision: ^0.10.0
@@ -58,6 +57,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - images/trash-icon.png
+    - assets/ingredients.json
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

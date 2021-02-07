@@ -94,7 +94,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
     for (TextBlock block in visionText.blocks) {
       for (TextLine line in block.lines) {
         for (TextElement element in line.elements) {
-          print(Client.items.elementAt(0));
+          // print(Client.items.elementAt(0));
           if (isNumeric(element.text)) {
             quantite = int.parse(element.text);
             ingredientList.add(Ingredient(
@@ -106,7 +106,8 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                   Ingredient(date: DateTime.now(), quantity: 1, title: item));
             }
 
-            item = element.text.bestMatch(Client.items).toString();
+            print(element.text);
+            item = element.text.bestMatch(Client.items).bestMatch.target;
             print(item);
           }
         }
@@ -118,7 +119,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
     }
     cloudTextRecognizer.close();
     for (Ingredient ingredient in ingredientList) {
-      print(ingredient.title + " " + ingredient.quantity.toString());
+      // print(ingredient.title + " " + ingredient.quantity.toString());
     }
     return ingredientList;
   }

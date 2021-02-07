@@ -14,7 +14,16 @@ void main() async {
 
   Camera.mainCamera = cameras.first;
 
+  await Client.openStorage();
+
   Client.items = (await loadJsonIngredients('assets/ingredients.json'));
+
+  // print(Client.items);
+
+  Client.addRandomLists();
+  await Client.addListToBackup();
+
+  await Client.loadListsFromBackup();
 
   runApp(MyApp());
 }

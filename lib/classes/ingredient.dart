@@ -1,3 +1,17 @@
+class FoodList {
+  DateTime date;
+  List<Ingredient> items;
+
+  FoodList({this.items, this.date});
+
+  Map toJson() {
+    List<Map> items =
+        this.items != null ? this.items.map((i) => i.toJson()).toList() : null;
+
+    return {'date': date.toString(), 'items': items};
+  }
+}
+
 class Ingredient {
   String title;
   DateTime date;
@@ -5,6 +19,12 @@ class Ingredient {
   bool bought;
 
   Ingredient({this.title, this.date, this.quantity, this.bought = false});
+
+  Ingredient.fromMap(Map<String, dynamic> map) {
+    this.title = map['title'];
+    this.quantity = map['quantity'];
+    this.date = DateTime.parse(map['date']);
+  }
 
   Ingredient.fromJson(Map<String, dynamic> json) {
     this.title = json['title'];

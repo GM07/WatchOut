@@ -163,7 +163,9 @@ class Client {
   }
 
   static FoodList getLastFoodList() {
-    if (backupLists == null || backupLists.keys == null) {
+    if (backupLists == null ||
+        backupLists.keys == null ||
+        backupLists.keys.length == 0) {
       return null;
     }
 

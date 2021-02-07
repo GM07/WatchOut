@@ -1,9 +1,9 @@
 class FoodList {
   DateTime date;
   List<Ingredient> items;
-  int numberWasted = 0;
+  int numberWasted;
 
-  FoodList({this.items, this.date, this.numberWasted});
+  FoodList({this.items, this.date, this.numberWasted = 0});
 
   Map toJson() {
     List<Map> items =

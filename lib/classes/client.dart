@@ -37,6 +37,15 @@ class Client {
           FoodList(items: generateIngredients(3), date: DateTime.now()),
       'Jamais': FoodList(items: generateIngredients(4), date: DateTime.now()),
     };
+    scores = {
+      'potato': 5,
+      'tomato': 10,
+      'carrot': 7,
+      'Orange juice': 3,
+      'pineapple': 6,
+      'pizza': 2,
+      'salt': 15,
+    };
   }
 
   static void onIngredientThrown(Ingredient ingredient, int quantity) {
@@ -45,6 +54,34 @@ class Client {
     else
       scores[ingredient.title] = quantity;
     saveScores();
+  }
+
+  static List<String> worstIngredients() {
+    List<String> worstItems = new List<String>(3);
+    List<int> worstScores = new List<int>.filled(3, 0, growable: false);
+    for (var entry in scores.entries) {
+      if (entry.value >= worstScores[2]) {
+        worstScores[2] = entry.value;
+        worstItems[2] = entry.key;
+        if (worstScores[2] >= worstScores[1]) {
+          int temp = worstScores[1];
+          String tempName = worstItems[1];
+          worstScores[1] = worstScores[2];
+          worstScores[2] = temp;
+          worstItems[1] = worstItems[2];
+          worstItems[2] = tempName;
+        }
+        if (worstScores[1] >= worstScores[0]) {
+          int temp = worstScores[0];
+          String tempName = worstItems[0];
+          worstScores[0] = worstScores[1];
+          worstScores[1] = temp;
+          worstItems[0] = worstItems[1];
+          worstItems[1] = tempName;
+        }
+      }
+    }
+    return worstItems;
   }
 
   static Future saveScores() async {
@@ -63,6 +100,9 @@ class Client {
 
     String jsonString = await fileDechet.readAsString();
     Map<String, dynamic> map = jsonDecode(jsonString);
+    for (var entry in map.entries) {
+      scores[entry.key] = entry.value;
+    }
   }
 
   static List<Ingredient> getListFromJsonElement(dynamic element) {

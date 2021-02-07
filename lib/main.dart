@@ -16,11 +16,15 @@ void main() async {
 
   await Client.openStorage();
 
+  Client.addRandomLists();
+
   Client.items = (await loadJsonIngredients('assets/ingredients.json'));
 
   await Client.loadScores();
 
   await Client.loadListsFromBackup();
+
+  List<String> booh = Client.worstIngredients();
 
   runApp(MyApp());
 }

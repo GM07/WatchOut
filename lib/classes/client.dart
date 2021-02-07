@@ -57,6 +57,21 @@ class Client {
     saveScores();
   }
 
+  static bool watchOut(Ingredient ingredient) {
+    int quantity = 0;
+    for (var value in backupLists.values) {
+      for (var ingredientP in value.items) {
+        if (ingredientP.title.compareTo(ingredient.title) == 0) {
+          quantity += ingredientP.quantity;
+        }
+      }
+    }
+    int thrown =
+        scores.containsKey(ingredient.title) ? scores[ingredient.title] : 0;
+    if (quantity != 0 && thrown / quantity < 0.25) return true;
+    return false;
+  }
+
   static List<String> worstIngredients() {
     List<String> worstItems = new List<String>(3);
     List<int> worstScores = new List<int>.filled(3, 0, growable: false);
@@ -146,16 +161,6 @@ class Client {
 
     if (!await filelist.exists()) {
       filelist.create(recursive: false);
-    }
-
-    String jsonMap = jsonEncode(backupLists);
-    filelist.writeAsString(jsonMap);
-  }
-
-  // Adds current ingredient list to backup
-  static Future addDechetToBackup() async {
-    if (!await fileDechet.exists()) {
-      fileDechet.create(recursive: false);
     }
 
     String jsonMap = jsonEncode(backupLists);

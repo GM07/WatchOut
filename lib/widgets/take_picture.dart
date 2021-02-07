@@ -117,7 +117,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
         }
       }
     }
-    if (item != null) {
+    if (item != null && item != '') {
       ingredientList
           .add(Ingredient(date: DateTime.now(), quantity: 1, title: item));
     }

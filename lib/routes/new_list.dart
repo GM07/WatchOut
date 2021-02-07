@@ -35,7 +35,10 @@ class NewListState extends State<NewList> {
       Camera.mainCamera,
       // Define the resolution to use.
       ResolutionPreset.veryHigh,
+
+
     );
+    //Client.ingredients.items = [Ingredient(title: "b", date: DateTime.now(), quantity: 1, bought: true )];
 
     // Next, initialize the controller. This returns a Future.
     _initializeControllerFuture = _controller.initialize();
@@ -113,6 +116,9 @@ class NewListState extends State<NewList> {
                 valueInputController.text = value.toString();
                 setState(() {
                   e.quantity = value;
+                  if(value == 0){
+                    Client.ingredients.items.remove(e);
+                  }
                 });
               },
             ),

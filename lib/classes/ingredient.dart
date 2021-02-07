@@ -1,14 +1,30 @@
 class FoodList {
   DateTime date;
   List<Ingredient> items;
+  int numberWasted = 0;
 
-  FoodList({this.items, this.date});
+  FoodList({this.items, this.date, this.numberWasted});
 
   Map toJson() {
     List<Map> items =
         this.items != null ? this.items.map((i) => i.toJson()).toList() : null;
 
-    return {'date': date.toString(), 'items': items};
+    return {
+      'date': date.toString(),
+      'items': items,
+      'numberWasted': numberWasted
+    };
+  }
+
+  @override
+  String toString() {
+    // TODO: implement toString
+    return 'date: ' +
+        date.toString() +
+        ', items:' +
+        items.toString() +
+        ', numberWasted: ' +
+        numberWasted.toString();
   }
 }
 

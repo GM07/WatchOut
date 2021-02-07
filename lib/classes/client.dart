@@ -49,7 +49,12 @@ class Client {
     };
   }
 
-  static void onIngredientThrown(Ingredient ingredient, int quantity) {
+  static void onIngredientThrown(
+      FoodList list, Ingredient ingredient, int quantity) {
+    backupLists.values
+        .firstWhere((FoodList f) => f.date == list.date)
+        .numberWasted += quantity;
+
     if (scores.containsKey(ingredient.title))
       scores.update(ingredient.title, (value) => value + quantity);
     else
@@ -140,18 +145,26 @@ class Client {
     Map<String, dynamic> map = jsonDecode(jsonString);
     backupLists = map.map((String key, dynamic value) {
       if (value == null) {
-        print(key);
         return MapEntry<String, FoodList>(key, FoodList());
       }
-      print(value);
       return MapEntry<String, FoodList>(
           key,
           FoodList(
+              numberWasted: value['numberWasted'] ?? 0,
               date: DateTime.parse(value['date']),
               items: getListFromJsonElement(value['items'])));
     });
 
     print(backupLists);
+  }
+
+  static Future updateBackup() async {
+    if (!await filelist.exists()) {
+      filelist.create(recursive: false);
+    }
+
+    String jsonMap = jsonEncode(backupLists);
+    filelist.writeAsString(jsonMap);
   }
 
   // Adds current ingredient list to backup

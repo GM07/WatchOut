@@ -14,7 +14,7 @@ class PastLists extends StatefulWidget {
 }
 
 class _PastListsState extends State<PastLists> {
-  void buildBottomSheet(BuildContext context, Ingredient e) {
+  void buildBottomSheet(BuildContext context, FoodList f, Ingredient e) {
     TextEditingController valueInputController = new TextEditingController();
     valueInputController.text = "0";
 
@@ -137,10 +137,12 @@ class _PastListsState extends State<PastLists> {
                   ),
                   Center(
                     child: CustomButton(
-                      onPressed: () {
+                      onPressed: () async {
                         Client.onIngredientThrown(
-                            e, int.parse(valueInputController.text));
+                            f, e, int.parse(valueInputController.text));
                         Navigator.pop(context);
+                        await Client.updateBackup();
+                        setState(() {});
                       },
                       title: "Confirm",
                     ),
@@ -193,21 +195,21 @@ class _PastListsState extends State<PastLists> {
                       maintainState: false,
                       initiallyExpanded: false,
                       title: Text(
-                        "${f.format(list.date)}",
+                        "(${list.numberWasted} ITEMS WASTED)\t ${f.format(list.date)}",
                       ),
-                      children: currentItems(list.items, context));
+                      children: currentItems(list, context));
                 }).toList(),
               )
       ],
     );
   }
 
-  List<Widget> currentItems(List<Ingredient> list, BuildContext context) {
-    if (list == null || list.isEmpty) {
+  List<Widget> currentItems(FoodList list, BuildContext context) {
+    if (list.items == null || list.items.isEmpty) {
       return List<Widget>();
     }
 
-    return list.map((Ingredient e) {
+    return list.items.map((Ingredient e) {
       TextEditingController valueInputController = new TextEditingController();
       TextEditingController nameInputController = new TextEditingController();
       valueInputController.text = e.quantity.toString();
@@ -215,7 +217,7 @@ class _PastListsState extends State<PastLists> {
 
       return GestureDetector(
         onLongPress: () {
-          buildBottomSheet(context, e);
+          buildBottomSheet(context, list, e);
         },
         child: Container(
           margin: EdgeInsets.all(4.0),

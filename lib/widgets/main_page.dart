@@ -1,8 +1,9 @@
 import 'package:WatchOut/classes/client.dart';
 import 'package:WatchOut/classes/ingredient.dart';
+import 'package:WatchOut/widgets/simple_line_chart.dart';
 import 'package:flutter/material.dart';
-import '../widgets/waste_saved.dart';
 import '../widgets/watch_out.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
 
 class MainPage extends StatefulWidget {
   @override
@@ -27,6 +28,25 @@ class _MainPageState extends State<MainPage> {
     }
 
     return getWidgets(subList, context);
+  }
+
+  /// Create one series with sample hard coded data.
+  static List<charts.Series<GraphData, int>> _createSampleData() {
+    final List<GraphData> data = List<GraphData>();
+
+    for (int i = 0; i < Client.backupLists.values.length; i++) {
+      data.add(
+          GraphData(i, Client.backupLists.values.elementAt(i).numberWasted));
+    }
+    return [
+      new charts.Series<GraphData, int>(
+        id: 'wasted',
+        colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+        domainFn: (GraphData wasted, _) => wasted.date,
+        measureFn: (GraphData wasted, _) => wasted.wasted,
+        data: data,
+      )
+    ];
   }
 
   @override
@@ -61,7 +81,7 @@ class _MainPageState extends State<MainPage> {
               onPressed: () => {},
               color: Theme.of(context).primaryColor,
               child: Text(
-                'Waste Saved'.toUpperCase(),
+                'Chart of Wasted Items'.toUpperCase(),
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 24,
@@ -80,7 +100,7 @@ class _MainPageState extends State<MainPage> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Container(
-                child: WasteSaved(),
+                child: SimpleLineChart(_createSampleData()),
               ),
             ),
           ),
@@ -155,4 +175,12 @@ class _MainPageState extends State<MainPage> {
       );
     }).toList();
   }
+}
+
+/// Sample linear data type.
+class GraphData {
+  final int date;
+  final int wasted;
+
+  GraphData(this.date, this.wasted);
 }

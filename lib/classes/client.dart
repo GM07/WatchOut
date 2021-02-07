@@ -154,8 +154,6 @@ class Client {
               date: DateTime.parse(value['date']),
               items: getListFromJsonElement(value['items'])));
     });
-
-    print(backupLists);
   }
 
   static Future updateBackup() async {

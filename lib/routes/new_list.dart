@@ -212,6 +212,32 @@ class NewListState extends State<NewList> {
             ),
           ),
           ...currentItems(),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            child: FloatingActionButton(
+              child: Icon(Icons.add),
+              elevation: 1.0,
+              onPressed: () {
+                setState(() {
+                  if (Client.ingredients == null) {
+                    Client.ingredients = FoodList(
+                        date: DateTime.now(),
+                        items: List<Ingredient>(),
+                        numberWasted: 0);
+                  }
+
+                  if (Client.ingredients.items == null) {
+                    Client.ingredients.items = List<Ingredient>();
+                  }
+
+                  Client.ingredients.date = DateTime.now();
+                  Client.ingredients.items.add(Ingredient(
+                      quantity: 1, title: 'Item', date: DateTime.now()));
+                });
+              },
+              backgroundColor: Theme.of(context).primaryColor,
+            ),
+          ),
           Client.ingredients == null ||
                   Client.ingredients.items == null ||
                   Client.ingredients.items.isEmpty

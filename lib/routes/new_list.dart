@@ -57,7 +57,9 @@ class NewListState extends State<NewList> {
 
     return Client.ingredients.items.map((Ingredient e) {
       TextEditingController valueInputController = new TextEditingController();
+      TextEditingController nameInputController = new TextEditingController();
       valueInputController.text = e.quantity.toString();
+      nameInputController.text = e.title;
 
       return Container(
         margin: EdgeInsets.all(4.0),
@@ -74,14 +76,24 @@ class NewListState extends State<NewList> {
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Container(
                   child: ListTile(
-                    title: Text(
-                      e.title,
+                    title: TextFormField(
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                      ),
                       style: TextStyle(
                         color: Theme.of(context).primaryColor,
                         fontWeight: FontWeight.bold,
                       ),
+                      textAlign: TextAlign.left,
+                      controller: nameInputController,
+                      onFieldSubmitted: (value) {
+                        this.setState(() {
+                          e.title = nameInputController.text;
+                        });
+                        nameInputController.clear();
+                      },
                     ),
-                    subtitle: Text('Quantite : ' + e.quantity.toString()),
                   ),
                 ),
               ),

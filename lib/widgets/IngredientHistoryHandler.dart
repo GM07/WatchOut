@@ -86,23 +86,18 @@ class _IngredientHistoryState extends State<IngredientHistory> {
   }
 
   void writeIngredient(Ingredient ingredient) {
-    // print("Writing to file " + fileName);
     Map<String, dynamic> content = ingredient.toJson();
     if (fileExists) {
-      // print("File exists");
       Map<String, dynamic> jsonFileContent =
           json.decode(jsonFile.readAsStringSync());
       jsonFileContent.addAll(content);
-      // print(jsonFileContent);
       jsonFile.writeAsStringSync(json.encode(jsonFileContent));
       getAllIngredients();
     } else {
-      // print("File does not exist");
       jsonFile = createFile(content, dir, fileName);
     }
     this.setState(() {
       fileContent = json.decode(jsonFile.readAsStringSync());
-      print(fileContent);
     });
   }
 

@@ -122,9 +122,6 @@ class TakePictureScreenState extends State<TakePictureScreen> {
           .add(Ingredient(date: DateTime.now(), quantity: 1, title: item));
     }
     cloudTextRecognizer.close();
-    for (Ingredient ingredient in ingredientList) {
-      print(ingredient.title + " " + ingredient.quantity.toString());
-    }
     return ingredientList;
   }
 

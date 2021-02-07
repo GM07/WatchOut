@@ -35,14 +35,11 @@ class NewListState extends State<NewList> {
       Camera.mainCamera,
       // Define the resolution to use.
       ResolutionPreset.veryHigh,
-
-
     );
     //Client.ingredients.items = [];
     //for(int i = 0; i < 5; ++i){
     //  Client.ingredients.items.add(Ingredient(title: i.toString(), date: DateTime.now(), quantity: i, bought: true ));
     //}
-
 
     // Next, initialize the controller. This returns a Future.
     _initializeControllerFuture = _controller.initialize();
@@ -62,17 +59,15 @@ class NewListState extends State<NewList> {
       return [
         Container(
           child: Text(
-              "No items currently",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Theme.of(context).primaryColor,
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),
+            "No items currently",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Theme.of(context).primaryColor,
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
           ),
-
         )
-
       ];
     }
 
@@ -134,7 +129,7 @@ class NewListState extends State<NewList> {
                 valueInputController.text = value.toString();
                 setState(() {
                   e.quantity = value;
-                  if(value == 0){
+                  if (value == 0) {
                     Client.ingredients.items.remove(e);
                   }
                 });
@@ -196,15 +191,11 @@ class NewListState extends State<NewList> {
           ),
         ));
 
-    setState(() {
-      print(Client.ingredients.items);
-    });
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    print('rebuilt');
-
     return Scaffold(
         body: Container(
       child: ListView(
@@ -221,20 +212,23 @@ class NewListState extends State<NewList> {
             ),
           ),
           ...currentItems(),
-          Client.ingredients == null || Client.ingredients.items == null || Client.ingredients.items.isEmpty ? const SizedBox.shrink() :
-          Padding(
-            padding:
-              const EdgeInsets.all(16.0).add(EdgeInsets.only(top: 8.0)),
-            child: Center(
-              child: CustomButton(
-              onPressed: () {
-                Client.addListToBackup();
-                Client.ingredients = FoodList();
-                Navigator.popAndPushNamed(context, '/');
-              },
-              title: "Confirm my list",
-            )),
-          ),
+          Client.ingredients == null ||
+                  Client.ingredients.items == null ||
+                  Client.ingredients.items.isEmpty
+              ? const SizedBox.shrink()
+              : Padding(
+                  padding:
+                      const EdgeInsets.all(16.0).add(EdgeInsets.only(top: 8.0)),
+                  child: Center(
+                      child: CustomButton(
+                    onPressed: () {
+                      Client.addListToBackup();
+                      Client.ingredients = FoodList();
+                      Navigator.popAndPushNamed(context, '/');
+                    },
+                    title: "Confirm my list",
+                  )),
+                ),
         ],
       ),
     ));

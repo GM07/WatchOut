@@ -31,20 +31,19 @@ class _MainPageState extends State<MainPage> {
   }
 
   /// Create one series with sample hard coded data.
-  static List<charts.Series<LinearSales, int>> _createSampleData() {
-    final data = [
-      new LinearSales(0, 5),
-      new LinearSales(1, 25),
-      new LinearSales(2, 100),
-      new LinearSales(3, 75),
-    ];
+  static List<charts.Series<GraphData, int>> _createSampleData() {
+    final List<GraphData> data = List<GraphData>();
 
+    for (int i = 0; i < Client.backupLists.values.length; i++) {
+      data.add(
+          GraphData(i, Client.backupLists.values.elementAt(i).numberWasted));
+    }
     return [
-      new charts.Series<LinearSales, int>(
-        id: 'Sales',
-        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-        domainFn: (LinearSales sales, _) => sales.year,
-        measureFn: (LinearSales sales, _) => sales.sales,
+      new charts.Series<GraphData, int>(
+        id: 'wasted',
+        colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+        domainFn: (GraphData wasted, _) => wasted.date,
+        measureFn: (GraphData wasted, _) => wasted.wasted,
         data: data,
       )
     ];
@@ -82,7 +81,7 @@ class _MainPageState extends State<MainPage> {
               onPressed: () => {},
               color: Theme.of(context).primaryColor,
               child: Text(
-                'Waste Saved'.toUpperCase(),
+                'Chart of Wasted Items'.toUpperCase(),
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 24,
@@ -179,9 +178,9 @@ class _MainPageState extends State<MainPage> {
 }
 
 /// Sample linear data type.
-class LinearSales {
-  final int year;
-  final int sales;
+class GraphData {
+  final int date;
+  final int wasted;
 
-  LinearSales(this.year, this.sales);
+  GraphData(this.date, this.wasted);
 }

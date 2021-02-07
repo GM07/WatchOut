@@ -196,7 +196,7 @@ class _PastListsState extends State<PastLists> {
         Client.backupLists == null || Client.backupLists.keys == null
             ? const SizedBox.shrink()
             : Column(
-                children: Client.backupLists.keys.map((key) {
+                children: Client.backupLists.keys.toList().reversed.map((key) {
                   FoodList list = Client.backupLists[key];
                   final f = new DateFormat('EEEE, d MMM, yyyy');
                   return ExpansionTile(

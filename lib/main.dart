@@ -22,6 +22,8 @@ void main() async {
 
   await Client.loadListsFromBackup();
 
+  List<String> booh = Client.worstIngredients();
+
   runApp(MyApp());
 }
 

@@ -1,6 +1,7 @@
 import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:WatchOut/widgets/IngredientHistoryHandler.dart';
 import 'package:flutter/services.dart';
@@ -37,6 +38,15 @@ class Client {
           FoodList(items: generateIngredients(3), date: DateTime.now()),
       'Jamais': FoodList(items: generateIngredients(4), date: DateTime.now()),
     };
+    scores = {
+      'potato': 5,
+      'tomato': 10,
+      'carrot': 7,
+      'Orange juice': 3,
+      'pineapple': 6,
+      'pizza': 2,
+      'salt': 15,
+    };
   }
 
   static void onIngredientThrown(Ingredient ingredient, int quantity) {
@@ -45,6 +55,49 @@ class Client {
     else
       scores[ingredient.title] = quantity;
     saveScores();
+  }
+
+  static bool watchOut(Ingredient ingredient) {
+    int quantity = 0;
+    for (var value in backupLists.values) {
+      for (var ingredientP in value.items) {
+        if (ingredientP.title.compareTo(ingredient.title) == 0) {
+          quantity += ingredientP.quantity;
+        }
+      }
+    }
+    int thrown =
+        scores.containsKey(ingredient.title) ? scores[ingredient.title] : 0;
+    if (quantity != 0 && thrown / quantity < 0.25) return true;
+    return false;
+  }
+
+  static List<String> worstIngredients() {
+    List<String> worstItems = new List<String>(3);
+    List<int> worstScores = new List<int>.filled(3, 0, growable: false);
+    for (var entry in scores.entries) {
+      if (entry.value >= worstScores[2]) {
+        worstScores[2] = entry.value;
+        worstItems[2] = entry.key;
+        if (worstScores[2] >= worstScores[1]) {
+          int temp = worstScores[1];
+          String tempName = worstItems[1];
+          worstScores[1] = worstScores[2];
+          worstScores[2] = temp;
+          worstItems[1] = worstItems[2];
+          worstItems[2] = tempName;
+        }
+        if (worstScores[1] >= worstScores[0]) {
+          int temp = worstScores[0];
+          String tempName = worstItems[0];
+          worstScores[0] = worstScores[1];
+          worstScores[1] = temp;
+          worstItems[0] = worstItems[1];
+          worstItems[1] = tempName;
+        }
+      }
+    }
+    return worstItems;
   }
 
   static Future saveScores() async {
@@ -63,6 +116,9 @@ class Client {
 
     String jsonString = await fileDechet.readAsString();
     Map<String, dynamic> map = jsonDecode(jsonString);
+    for (var entry in map.entries) {
+      scores[entry.key] = entry.value;
+    }
   }
 
   static List<Ingredient> getListFromJsonElement(dynamic element) {
@@ -111,13 +167,18 @@ class Client {
     filelist.writeAsString(jsonMap);
   }
 
-  // Adds current ingredient list to backup
-  static Future addDechetToBackup() async {
-    if (!await fileDechet.exists()) {
-      fileDechet.create(recursive: false);
+  static FoodList getLastFoodList() {
+    if (backupLists == null ||
+        backupLists.keys == null ||
+        backupLists.keys.length == 0) {
+      return null;
     }
 
-    String jsonMap = jsonEncode(backupLists);
-    filelist.writeAsString(jsonMap);
+    List<DateTime> dates =
+        backupLists.keys.map((e) => DateTime.parse(e)).toList();
+
+    dates.sort((a, b) => a.isBefore(b) ? 1 : 0);
+
+    return backupLists[dates[0].toString()];
   }
 }

@@ -13,16 +13,19 @@ import 'package:WatchOut/classes/ingredient.dart';
 class Client {
   static FoodList ingredients = FoodList();
   static Map<String, FoodList> backupLists;
-  static Map<Ingredient, int> scores = Map();
+  static Map<String, int> scores = Map();
 
   static List<String> items;
-  static File file;
+  static File filelist;
+  static File fileDechet;
 
   static String relativePath = '/lists.json';
+  static String relativePathDechet = '/dechets.json';
 
   static Future openStorage() async {
     final path = await getApplicationDocumentsDirectory().then((e) => e.path);
-    file = File(path + relativePath);
+    filelist = File(path + relativePath);
+    fileDechet = File(path + relativePathDechet);
   }
 
   static void addRandomLists() {
@@ -36,6 +39,32 @@ class Client {
     };
   }
 
+  static void onIngredientThrown(Ingredient ingredient, int quantity) {
+    if (scores.containsKey(ingredient.title))
+      scores.update(ingredient.title, (value) => value + quantity);
+    else
+      scores[ingredient.title] = quantity;
+    saveScores();
+  }
+
+  static Future saveScores() async {
+    if (!await fileDechet.exists()) {
+      fileDechet.create(recursive: false);
+    }
+
+    String jsonMap = jsonEncode(scores);
+    fileDechet.writeAsString(jsonMap);
+  }
+
+  static Future loadScores() async {
+    if (!await fileDechet.exists()) {
+      return;
+    }
+
+    String jsonString = await fileDechet.readAsString();
+    Map<String, dynamic> map = jsonDecode(jsonString);
+  }
+
   static List<Ingredient> getListFromJsonElement(dynamic element) {
     List<Ingredient> list = List<Ingredient>();
 
@@ -47,11 +76,11 @@ class Client {
   }
 
   static Future loadListsFromBackup() async {
-    if (!await file.exists()) {
+    if (!await filelist.exists()) {
       return;
     }
 
-    String jsonString = await file.readAsString();
+    String jsonString = await filelist.readAsString();
     Map<String, dynamic> map = jsonDecode(jsonString);
     backupLists = map.map((String key, dynamic value) {
       if (value == null) {
@@ -71,11 +100,21 @@ class Client {
   static Future addListToBackup() async {
     // backupLists.addAll({DateTime.now().toString(): ingredients});
 
-    if (!await file.exists()) {
-      file.create(recursive: false);
+    if (!await filelist.exists()) {
+      filelist.create(recursive: false);
     }
 
     String jsonMap = jsonEncode(backupLists);
-    file.writeAsString(jsonMap);
+    filelist.writeAsString(jsonMap);
+  }
+
+  // Adds current ingredient list to backup
+  static Future addDechetToBackup() async {
+    if (!await fileDechet.exists()) {
+      fileDechet.create(recursive: false);
+    }
+
+    String jsonMap = jsonEncode(backupLists);
+    filelist.writeAsString(jsonMap);
   }
 }
